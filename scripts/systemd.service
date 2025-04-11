@@ -1,0 +1,10 @@
+[Unit]
+ Description=running the service scripts
+
+[Service]
+ User=roots
+ ExecStart=/bin/zsh /**/**/scripts/onStartUpScript.sh
+ Restart=always
+
+[Install]
+ WantedBy=multi-user.target
