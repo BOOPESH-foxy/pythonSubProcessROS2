@@ -1,3 +1,0 @@
-[console_scripts]
-talker_trigger_node = service_talker.ros2_serviceCall:main
-
