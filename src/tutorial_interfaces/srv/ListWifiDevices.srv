@@ -1,0 +1,5 @@
+
+---
+int32 timestamp
+bool isconnected
+string[] devices
