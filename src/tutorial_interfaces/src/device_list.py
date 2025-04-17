@@ -11,8 +11,8 @@ class DeviceListNode(Node):
         self.srv = self.create_service(ListWifiDevices, 'list_wifi_devices', self.list_wifi_devices_callback)
 
     def list_wifi_devices_callback(self, request, response):
-        current_time = int(time.time())
-        response.timestamp = current_time
+        # current_time = int(time.time())
+        response.timestamp = int(time.time())
 
         is_connected = self.check_wifi_connection()
         if(is_connected):
@@ -24,22 +24,24 @@ class DeviceListNode(Node):
         response.devices = devices_list
         return response
 
+
     def get_wifi_list(self):
 
-        wifi_list = []
+        wifi_ssid_list = []
         try:
             result = subprocess.run(['nmcli', 'device', 'wifi', 'list'], capture_output=True, text=True, check=True)
             lines = result.stdout.split('\n')
-            ssid = []
-            for line in lines:
+            index = 2
+            for line in lines[1:]:
                 if not line:
                     continue
                 wifi_data = line.split()
-                ssid.append(wifi_data[2])
+                wifi_ssid_list.append(wifi_data[index])
+                index = 1
     
         except Exception as e:
-            wifi_list.append("wifi state: off")    
-        return wifi_list
+            wifi_ssid_list.append("wifi state: off")    
+        return wifi_ssid_list
 
 
     def check_wifi_connection(self):
