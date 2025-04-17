@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 from tutorial_interfaces.srv import ListWifiDevices
 import time
+import wifi
 
 class DeviceListNode(Node):
     def __init__(self):
@@ -27,9 +28,15 @@ class DeviceListNode(Node):
 
         wifi_list = []
         try:
-            result = subprocess.check_output(['iwgetid', '--raw'])
-            ssid = result.strip().decode('utf-8')
-            wifi_list.append(ssid)
+            result = subprocess.run(['nmcli', 'device', 'wifi', 'list'], capture_output=True, text=True, check=True)
+            lines = result.stdout.split('\n')
+            ssid = []
+            for line in lines:
+                if not line:
+                    continue
+                wifi_data = line.split()
+                ssid.append(wifi_data[2])
+    
         except Exception as e:
             wifi_list.append("wifi state: off")    
         return wifi_list

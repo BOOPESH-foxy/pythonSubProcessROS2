@@ -1,15 +1,19 @@
-
 import subprocess
 
-def check_wifi_connection():
-            
-            result = subprocess.check_output(['iwgetid', '--raw'])
-            ssid = result.strip().decode('utf-8')
-            print(ssid)
-            if result:
-                return True
-            else:
+def list_wifi_ssids():
+    try:
+        result = subprocess.run(['nmcli', 'device', 'wifi', 'list'], capture_output=True, text=True, check=True)
+        lines = result.stdout.split('\n')
+        ssids = []
+        for line in lines[1:]:
+            if not line:
+                continue
+            data = line.split()
+            ssids.append(data[2])
+        print(ssids)
+        
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred: {e}")
+        return []
 
-                return False
-result = check_wifi_connection()
-print(result)
+wifi_ssids = list_wifi_ssids()
