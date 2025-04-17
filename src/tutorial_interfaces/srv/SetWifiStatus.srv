@@ -1,0 +1,3 @@
+string CONNECT = 'CONNECT'
+string DISCONNECT = 'DISCONNECT'
+---
