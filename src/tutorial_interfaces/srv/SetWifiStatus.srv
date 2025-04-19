@@ -1,3 +1,4 @@
-string CONNECT = 'CONNECT'
-string DISCONNECT = 'DISCONNECT'
+string[] connectwifi
+string disconnectwifi
 ---
+string status

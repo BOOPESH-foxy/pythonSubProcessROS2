@@ -10,9 +10,9 @@ class DeviceListNode(Node):
 
     def __init__(self):
 
-        super().__init__('device_list_node')
-        self.list_wifi_service = self.create_service(ListWifiDevices, 'list_wifi_devices', self.list_wifi_devices_callback)
-        self.stop_wifi_discovery = self.create_service(ListWifiDevices,'stop_wifi_devices_descovery',self.stop_wifi_discovery_callback)
+        super().__init__('DeviceList')
+        self.list_wifi_service = self.create_service(ListWifiDevices, 'start_wifi_discovery', self.start_wifi_discovery_callback)
+        self.stop_wifi_discovery = self.create_service(ListWifiDevices,'stop_wifi_descovery',self.stop_wifi_discovery_callback)
         
         self.list_wifi_publisher = self.create_publisher(String,'iris_wifi_devices',1)
         time_period = 2
@@ -28,7 +28,7 @@ class DeviceListNode(Node):
 
 
 
-    def list_wifi_devices_callback(self, request, response):
+    def start_wifi_discovery_callback(self, request, response):
         response.timestamp = int(time.time())
         response.discoverystatus = 'On'
         is_connected = self.check_wifi_connection()

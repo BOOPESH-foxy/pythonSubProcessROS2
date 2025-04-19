@@ -35,5 +35,26 @@ def wifi_status():
     except Exception as e:
         print(e)
 
+def set_wifi():
+        string_list = []
+        string_list = ['****','*****']
+        ssid,password = string_list[0],string_list[1]
+        out = subprocess.run(['nmcli', 'device', 'wifi', 'connect', ssid, 'password', password],
+                                capture_output=True,
+                                text=True,
+                                check=True
+                                )
+        print(out)
+
+def disconnect_wifi():
+    wifi = 'boo 1'
+    print(wifi)
+    out = subprocess.run(['nmcli', 'connection', 'down', wifi],
+                                    capture_output=True,
+                                    text=True,
+                                    check=True
+                                    )
 # wifi_ssids = list_wifi_ssids()
-wifi_status = wifi_status()
+# wifi_status = wifi_status()
+# set_wifi = set_wifi()
+disconnect_wifi = disconnect_wifi()
