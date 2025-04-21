@@ -1,16 +1,14 @@
 import subprocess
-import rclpy
-from tutorial_interfaces.srv import GetWifiStatus
-from rclpy.node import Node
 import Jetson.GPIO as GPIO
 
-class GetWifiStatusNode(Node):
+class GetWifiStatus():
 
     def __init__(self):
-        super().__init__("GetWifiStatus")
-        self.service = self.create_service(GetWifiStatus,"iris/Get_wifi_status",self.wifiStatus_callback)
         self.channels = [15,29]
-    def wifiStatus_callback(self,request,response):
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(self.channels,GPIO.OUT,initial=GPIO.LOW)
+
+    def wifiStatus_call(self):
         out = subprocess.run(['nmcli', 'radio', 'wifi'],
                                 capture_output=True,
                                 text=True,
@@ -18,19 +16,15 @@ class GetWifiStatusNode(Node):
                                 )
         status = out.stdout.split()
         if(status[0] == 'enabled'):
-            response.status=True
             GPIO.output(self.channels[0],GPIO.HIGH)
+            print("PIN 15 HIGH")
         else:
-            response.status=False
             GPIO.output(self.channels[1],GPIO.HIGH)
+            print("PIN 29 HIGH")
 
-        return response
-
-def main(args=None):
-    rclpy.init(args=args)
-    node = GetWifiStatusNode()
-    rclpy.spin(node)
-    rclpy.shutdown()
+def main():
+    obj = GetWifiStatus()
+    obj.wifiStatus_call()
 
 if __name__ == "__main__":
     main()
