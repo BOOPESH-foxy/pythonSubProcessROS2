@@ -15,7 +15,7 @@ class ListBleDevicesNode(Node):
             ble_devices = []
             list_devices = await BleakScanner.discover()
             for d in list_devices:
-                ble_devices.append(d.name)
+                ble_devices.append(d.address)
             print(ble_devices)
             response.blestate = "On"
             response.bledevices = ble_devices
