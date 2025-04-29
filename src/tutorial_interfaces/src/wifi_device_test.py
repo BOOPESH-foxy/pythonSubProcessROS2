@@ -37,7 +37,7 @@ def wifi_status():
 
 def set_wifi():
         string_list = []
-        string_list = ['****','*****']
+        string_list = ['RapplWifi','rappl4567']
         ssid,password = string_list[0],string_list[1]
         out = subprocess.run(['nmcli', 'device', 'wifi', 'connect', ssid, 'password', password],
                                 capture_output=True,
@@ -56,5 +56,5 @@ def disconnect_wifi():
                                     )
 # wifi_ssids = list_wifi_ssids()
 # wifi_status = wifi_status()
-# set_wifi = set_wifi()
-disconnect_wifi = disconnect_wifi()
+set_wifi = set_wifi()
+# disconnect_wifi = disconnect_wifi()

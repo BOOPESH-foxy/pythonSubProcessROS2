@@ -48,6 +48,7 @@ class DeviceListNode(Node):
     def stop_wifi_discovery_callback(self,request,response):
         
         response.timestamp = int(time.time())
+        self.list_wifi_publisher.destroy()
         is_connected = self.check_wifi_connection()
         if(is_connected):
             response.isconnected = True
